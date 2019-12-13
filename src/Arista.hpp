@@ -5,11 +5,12 @@
 #include "Arista.h"
 
 template<typename T>
-T Arista<T>::V() {
+const T & Arista<T>::V() const {
     return v;
 }
 
 template<typename T>
-T Arista<T>::U() {
+const T & Arista<T>::U() const {
     return u;
 }
+

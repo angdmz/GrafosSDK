@@ -3,6 +3,8 @@
 //
 
 #include "Arista.h"
+#include "GrafoSimple.h"
+
 
 template<typename T>
 bool GrafoSimple<T>::tieneCiclos() {
@@ -16,27 +18,38 @@ bool GrafoSimple<T>::esConexo() {
 
 template<typename T>
 int GrafoSimple<T>::cardinalVertices() {
-    return 0;
+    return vertices.size();
 }
 
 template<typename T>
 int GrafoSimple<T>::cardinalAristas() {
-    return 0;
+    return aristas.size();
 }
 
 template<typename T>
-GrafoSimple<T>::GrafoSimple() {
-    // vertices = new std::vector<T>();
-    // aristas = new std::vector<Arista<T>>;
-    // listaAdyacencias = new std::vector<std::vector<Arista<T>>>();
-}
-
-template<typename T>
-GrafoSimple<T>::GrafoSimple(const std::vector<T>& _vertices, const std::vector<Arista<T>>& _aristas): vertices(_vertices), aristas(_aristas){
-    std::vector<std::vector<Arista<T>>> adj(_vertices.size());
-    for(Arista<T> e : _aristas){
-        adj[e.u].push_back(e);
-        adj[e.v].push_back(e);
+GrafoSimple<T>::GrafoSimple(const std::set<T> &vertices, const std::set<Arista<T>> &aristas): vertices(vertices), aristas(aristas){
+    std::map<T, std::set<T>> adj(vertices.size());
+    for(Arista<T> e : aristas){
+        adj[e.V()].push_back(e);
+        adj[e.U()].push_back(e);
     }
-    listaAdyacencias = adj;
+    mapaAdyacencias = adj;
 }
+
+template<typename T>
+GrafoSimple<T>::GrafoSimple(const std::set<T> &vertices): vertices(vertices){
+
+}
+
+template<typename T>
+GrafoSimple<T>::GrafoSimple(const std::set<Arista<T>>& aristas): aristas(aristas){
+    for(Arista<T> e : aristas){
+        vertices.insert(e.U());
+        vertices.insert(e.V());
+        mapaAdyacencias[e.V()].insert(e.U());
+        mapaAdyacencias[e.U()].insert(e.V());
+    }
+}
+
+template<typename T>
+GrafoSimple<T>::GrafoSimple() = default;

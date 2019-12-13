@@ -11,16 +11,16 @@ class Arista {
         T v;
         T u;
     public:
+        const T & U() const;
+        const T & V() const;
 
+public:
         Arista(T v, T u): v(v), u(u){}
 
-        bool operator==(const Arista& e) const {
-            return (v == e.v and u == e.u) or (v == e.u and u == e.v);
-        }
-
-        T V();
-        T U();
 };
 
+
+
+#include "Arista.hpp"
 
 #endif //GRAFOSSDK_ARISTA_H

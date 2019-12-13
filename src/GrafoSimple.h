@@ -5,23 +5,25 @@
 #ifndef GRAFOSSDK_GRAFOSIMPLE_H
 #define GRAFOSSDK_GRAFOSIMPLE_H
 
-#include <Arista.h>
+#include "Arista.h"
 
 template <typename T>
 class GrafoSimple {
-private:
-    std::vector<T>& vertices;
-    std::vector<Arista<T>>& aristas;
-    std::vector<std::vector<Arista<T>>> listaAdyacencias;
+    private:
+        std::set<T> vertices;
+        std::set<Arista<T>> aristas;
+        std::map<T, std::set<T>> mapaAdyacencias;
 
-public:
-    bool tieneCiclos();
-    bool esConexo();
-    int cardinalVertices();
-    int cardinalAristas();
+    public:
+        bool tieneCiclos();
+        bool esConexo();
+        int cardinalVertices();
+        int cardinalAristas();
 
-    GrafoSimple();
-    GrafoSimple(const std::vector<T>& _vertices, const std::vector<Arista<T>>& _aristas);
+        GrafoSimple();
+        GrafoSimple(const std::set<T>& vertices, const std::set<Arista<T>>& aristas);
+        GrafoSimple(const std::set<T>& vertices);
+        GrafoSimple(const std::set<Arista<T>>& aristas);
 };
 
 
